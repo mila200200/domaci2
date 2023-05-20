@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Genre;
+use App\Models\Series;
+use App\Models\Starring;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +19,27 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        Series::truncate();
+        User::truncate();
+        Genre::truncate();
+        Starring::truncate();
+
+        $user = User::factory()->create();
+        $genre1 = Genre::factory()->create();
+        $genre2 = Genre::factory()->create();
+        $starring1 = Starring::factory()->create();
+
+        Series::factory(3)->create([
+            'user_id'=> $user->id,
+            'genre_id'=> $genre1->id,
+            'starring_id'=> $starring1->id
+        ]);
+
+        Series::factory(2)->create([
+            'user_id'=> $user->id,
+            'genre_id'=> $genre2->id,
+            'starring_id'=> $starring1->id
+        ]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
